@@ -9,6 +9,9 @@ class Task:
             raise ValueError("無効な値です。")
         self.task_status = task_status
 
+    def __repr__(self):
+        return "This task' name is {task_title} . task description is {task_description} . task_status is {task_status} ".format(task_title = self.task_title, task_description = self.task_description, task_status = self.task_status)
+
 class Task_manager:
     number_of_task_done = 0
 
@@ -18,13 +21,6 @@ class Task_manager:
     def task_add(self, task_title, task_description, task_detail, task_status):
         task = Task(task_title, task_description, task_detail, task_status)
         self.task_list.append(task)
-    
-    def get_task_detail(self):
-        self.task_title = Task.task_title
-        self.task_description = Task.task_description
-        self.task_detail = Task.task_detail
-        self.task_status = Task.task_status
-
     
     def count_task(self):
         return len(self.task_list)
@@ -45,34 +41,19 @@ class Task_manager:
 #初期化コード、初期化していないと__init__内の定義が機能しない
 task_zero = Task_manager()
 task_zero.task_add("presentaiton","aaaa","presentation","TO_DO")
-task_zero.count_task
-print(task_zero.get_task_detail)
-# print(task_zero.task_status)
-# print(task_zero.number_of_task)
-# print("the current number of tasks done is " + str(task_zero.number_of_task_done))
+task_count_zero = task_zero.count_task()
+all_tasks_zero = task_zero.get_all_tasks()
+# task_show = Task.__repr__()
 
-# task_zero.status_update("DONE")
-# print("current task status of task_zero is " + task_zero.task_status)
-# print("the current number of tasks done is " + str(task_zero.number_of_task_done))
-
-# #最初に作成するタスク情報をユーザーから受け取る
-# title = input("Give a name of new task：　")
-# task_description = input("what is this task for?：　")
-# detail = input("what should you do exactry ? todo_list or deadline：　")
-# task_status = input("what is the status of this task?：　")
+print(task_count_zero)
+print(all_tasks_zero)
 
 
-# #最初のタスクをインスタンスクラスを作成
-# first_task = Task(title,task_description,detail,task_status)
-
-
-# #2つ目に作成するタスク情報をユーザーから受け取る
-# title2 = input("Gve a name of new task：　")
-# explanation2 = input("what is this task for?：　")
-# detail2 = input("what should you do exactry ? todo_list or deadline：　")
-# task_status2 = input("what is the status of this task?：　")
-
-# second_task = Task(title2,explanation2,detail2,task_status2)
-
+# 特定のタスクの task_status を確認
+if len(all_tasks_zero) > 0:
+    first_task_status = all_tasks_zero[0].task_status
+    print("タスクのステータス:", first_task_status)
+else:
+    print("タスクがありません。")
 
 
