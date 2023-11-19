@@ -1,4 +1,5 @@
 class Task:
+    #クラス変数はどこからでもアクセス可能
     valid_values = ["TO_DO", "IN_PROGRESS", "DONE"]
 
     def __init__(self, task_title, task_description, task_detail, task_status):
@@ -25,14 +26,19 @@ class Task_manager:
     def count_task(self):
         return len(self.task_list)
 
-    def status_update(self, task, new_status):
+    def New_status(self,new_status):
         if new_status not in Task.valid_values:
             raise ValueError("無効な値です。")
         else:
-            task.task_status = new_status
+            self.new_status = new_status
+            return self.new_status
+        
+        # if new_status == "DONE":
+        #     Task_manager.number_of_task_done += 1
+    
+    def status_update(self,update_task):
+        pass
 
-        if new_status == "DONE":
-            Task_manager.number_of_task_done += 1
     
     def get_all_tasks(self):
         return self.task_list
@@ -42,18 +48,29 @@ class Task_manager:
 task_zero = Task_manager()
 task_zero.task_add("presentaiton","aaaa","presentation","TO_DO")
 task_count_zero = task_zero.count_task()
-all_tasks_zero = task_zero.get_all_tasks()
+all_tasks = task_zero.get_all_tasks()
 # task_show = Task.__repr__()
 
 print(task_count_zero)
-print(all_tasks_zero)
+print(all_tasks)
+
+print(Task.valid_values)
 
 
-# 特定のタスクの task_status を確認
-if len(all_tasks_zero) > 0:
-    first_task_status = all_tasks_zero[0].task_status
-    print("タスクのステータス:", first_task_status)
+#特定のタスクの task_status を確認
+if len(all_tasks) > 0:
+    task_zero_status = all_tasks[0].task_status
+    print("タスクのステータス:", task_zero_status)
 else:
     print("タスクがありません。")
 
+#クラス内の属性とメソッドのリストを表示
+print(dir(Task_manager))
+
+#特定のタスクのステータスをアップデートして表示
+task_zero_new_status = task_zero.New_status("DONE")
+print(task_zero_new_status)
+
+all_tasks[0].task_status = task_zero_new_status
+print(all_tasks[0].task_status)
 
