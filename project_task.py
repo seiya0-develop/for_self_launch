@@ -1,16 +1,12 @@
-from enum import Enum
-
 #タスクのステータス管理のためのクラス
-class Task_status(Enum):
-    status1 = "TO_DO"
-    status2 = "IN_PROGRESS"
-    status3 = "DONE"
+# class Task_status:
+#     valid_values = ["TO_DO", "IN_PROGRESS", "DONE"]
 
 # print(Task_status.__members__.values())
 
 #新しいタスクを作成するためのクラス
 class Task:
-
+    valid_values = ["TO_DO", "IN_PROGRESS", "DONE"]
     #keep track of number of task
     number_of_task = 0
     #keep track of number of task_done
@@ -22,17 +18,16 @@ class Task:
         self.task_description = task_description
         self.task_detail = task_detail
         #入力できる3つのステータス以外に文字列が入ってこないか判定
-        if task_status not in Task_status.__members__.values():
+        if task_status not in Task.valid_values:
             raise ValueError("無効な値です。")
-        # else:
         self.task_status = task_status
         Task.number_of_task += 1
-        
+    
     #タスクのステータスをアップデート
     def status_update(self,new_status):
         
         #入力できる3つのステータス以外に文字列が入ってこないか判定
-        if new_status not in Task_status.__members__.values():
+        if new_status not in Task.valid_values:
             raise ValueError("無効な値です。")
         else:
             self.task_status = new_status
@@ -44,7 +39,10 @@ class Task:
 task_zero = Task("presentaiton","aaaa","presentation","TO_DO")
 print(task_zero.task_status)
 print(task_zero.number_of_task)
+print(task_zero.number_of_task_done)
 
+task_zero.status_update("DONE")
+print(task_zero.number_of_task_done)
 
 # #最初に作成するタスク情報をユーザーから受け取る
 # title = input("Give a name of new task：　")
