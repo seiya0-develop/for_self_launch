@@ -1,48 +1,59 @@
-#タスクのステータス管理のためのクラス
-# class Task_status:
-#     valid_values = ["TO_DO", "IN_PROGRESS", "DONE"]
-
-# print(Task_status.__members__.values())
-
-#新しいタスクを作成するためのクラス
 class Task:
     valid_values = ["TO_DO", "IN_PROGRESS", "DONE"]
-    #keep track of number of task
-    number_of_task = 0
-    #keep track of number of task_done
-    number_of_task_done = 0
 
-    #新しいタスクを作成
     def __init__(self, task_title, task_description, task_detail, task_status):
         self.task_title = task_title
         self.task_description = task_description
         self.task_detail = task_detail
-        #入力できる3つのステータス以外に文字列が入ってこないか判定
         if task_status not in Task.valid_values:
             raise ValueError("無効な値です。")
         self.task_status = task_status
-        Task.number_of_task += 1
+
+class Task_manager:
+    number_of_task_done = 0
+
+    def __init__(self):
+        self.task_list = []
+
+    def task_add(self, task_title, task_description, task_detail, task_status):
+        task = Task(task_title, task_description, task_detail, task_status)
+        self.task_list.append(task)
     
-    #タスクのステータスをアップデート
-    def status_update(self,new_status):
-        
-        #入力できる3つのステータス以外に文字列が入ってこないか判定
+    def get_task_detail(self):
+        self.task_title = Task.task_title
+        self.task_description = Task.task_description
+        self.task_detail = Task.task_detail
+        self.task_status = Task.task_status
+
+    
+    def count_task(self):
+        return len(self.task_list)
+
+    def status_update(self, task, new_status):
         if new_status not in Task.valid_values:
             raise ValueError("無効な値です。")
         else:
-            self.task_status = new_status
+            task.task_status = new_status
 
         if new_status == "DONE":
-            Task.number_of_task_done += 1
-        
+            Task_manager.number_of_task_done += 1
+    
+    def get_all_tasks(self):
+        return self.task_list
 
-task_zero = Task("presentaiton","aaaa","presentation","TO_DO")
-print(task_zero.task_status)
-print(task_zero.number_of_task)
-print(task_zero.number_of_task_done)
 
-task_zero.status_update("DONE")
-print(task_zero.number_of_task_done)
+#初期化コード、初期化していないと__init__内の定義が機能しない
+task_zero = Task_manager()
+task_zero.task_add("presentaiton","aaaa","presentation","TO_DO")
+task_zero.count_task
+print(task_zero.get_task_detail)
+# print(task_zero.task_status)
+# print(task_zero.number_of_task)
+# print("the current number of tasks done is " + str(task_zero.number_of_task_done))
+
+# task_zero.status_update("DONE")
+# print("current task status of task_zero is " + task_zero.task_status)
+# print("the current number of tasks done is " + str(task_zero.number_of_task_done))
 
 # #最初に作成するタスク情報をユーザーから受け取る
 # title = input("Give a name of new task：　")
