@@ -32,7 +32,7 @@ class Task_manager:
         if new_status not in Task.valid_values:
             raise ValueError("無効な値です。")
         else:
-            self.task_list[task_number] = new_status
+            self.task_list[task_number].task_stauts = new_status
         
 # Task_manager.number_of_task_done += 1
     
@@ -129,8 +129,11 @@ for i, task in enumerate(current_all_task):
 
 
 print("task_status update is needed ? : ") 
-task_one_update_target = input("which task?")
-task_one_update = input("what is the new status of this task ?  : ") 
+task_one_update_target = int(input("which task? : "))
+task_one_update = input("what is the new status of this task ? : ") 
  
-current_all_task[int(task_one_update_target)].task_status = task_one_update
-print("タスク" + current_all_task[int(task_one_update_target)].task_title + " の新しいステータスは[" + task_one_update + "] です。")
+task_one.New_status(task_one_update_target,task_one_update)
+
+# current_all_task[int(task_one_update_target)].task_status = task_one_update
+# print("タスク" + current_all_task[int(task_one_update_target)].task_title + " の新しいステータスは[" + task_one_update + "] です。")
+print("タスク" + str(current_all_task[task_one_update_target].task_title) + " の新しいステータスは[" + str(current_all_task[task_one_update_target].task_status) + "] です。")
