@@ -19,6 +19,9 @@ class Task_manager:
     def __init__(self):
         self.task_list = []
         #   self.task_dict = {}
+    
+    def __repr__(self):
+        return "To manege Task." 
 
     def task_add(self, task_title, task_description, task_detail, task_status):
         task = Task(task_title, task_description, task_detail, task_status)
@@ -27,12 +30,19 @@ class Task_manager:
     
     def count_task(self):
         return len(self.task_list)
-
-    def New_status(self,task_number,new_status):
+    
+    def del_task(self,task_number):
+        del self.task_list[task_number]
+        
+    def new_status(self,task_number,new_status):
         if new_status not in Task.valid_values:
             raise ValueError("無効な値です。")
         else:
-            self.task_list[task_number].task_stauts = new_status
+            try:
+                task_number < len(self.task_list)
+                self.task_list[task_number].task_status = new_status
+            except:
+                pass
         
 # Task_manager.number_of_task_done += 1
     
@@ -71,7 +81,7 @@ else:
 print(dir(Task_manager))
 
 #特定のタスクのステータスをアップデートして表示
-task_zero_new_status = task_zero.New_status(0,"DONE")
+task_zero_new_status = task_zero.new_status(0,"DONE")
 print(task_zero_new_status)
 
 
@@ -132,8 +142,20 @@ print("task_status update is needed ? : ")
 task_one_update_target = int(input("which task? : "))
 task_one_update = input("what is the new status of this task ? : ") 
  
-task_one.New_status(task_one_update_target,task_one_update)
+task_one.new_status(task_one_update_target,task_one_update)
 
 # current_all_task[int(task_one_update_target)].task_status = task_one_update
 # print("タスク" + current_all_task[int(task_one_update_target)].task_title + " の新しいステータスは[" + task_one_update + "] です。")
 print("タスク" + str(current_all_task[task_one_update_target].task_title) + " の新しいステータスは[" + str(current_all_task[task_one_update_target].task_status) + "] です。")
+
+
+task_one_delete = int(input("would you like to delete task ? : "))
+
+task_one.del_task(task_one_delete)
+# del current_all_task[task_one_delete]
+
+if len(all_tasks) > 0:
+    task_one_count = task_one.count_task()
+    print("現在のタスクの数:", task_one_count)
+else:
+    print("タスクがありません。")
